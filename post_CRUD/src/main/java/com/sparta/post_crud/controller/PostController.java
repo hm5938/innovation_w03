@@ -1,6 +1,7 @@
 package com.sparta.post_crud.controller;
 
 import com.sparta.post_crud.dto.PostRequestDto;
+import com.sparta.post_crud.dto.PostResponseDto;
 import com.sparta.post_crud.entity.Post;
 import com.sparta.post_crud.repository.PostRepository;
 import com.sparta.post_crud.service.PostService;
@@ -16,7 +17,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/api/posts")
-    public List<Post> getPosts(){ return postService.getList();}
+    public List<PostResponseDto> getPosts(){ return postService.getList();}
 
 
     @GetMapping("/api/posts/{id}")

@@ -1,6 +1,7 @@
 package com.sparta.post_crud.service;
 
 import com.sparta.post_crud.dto.PostRequestDto;
+import com.sparta.post_crud.dto.PostResponseDto;
 import com.sparta.post_crud.entity.Post;
 import com.sparta.post_crud.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -43,9 +45,16 @@ public class PostService {
     }
 
 
-    public List<Post> getList(){
+    public List<PostResponseDto> getList(){
         List<Post> posts= postRepository.findAll(Sort.by("createdAt"));
-        return posts;
+        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+        for (Post post:posts) {
+            PostResponseDto postResponseDto = new PostResponseDto(post);
+            postResponseDtoList.add(postResponseDto);
+        }
+
+
+        return postResponseDtoList;
     }
 
 }
