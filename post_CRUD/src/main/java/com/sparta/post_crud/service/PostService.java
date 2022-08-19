@@ -57,4 +57,11 @@ public class PostService {
         return postResponseDtoList;
     }
 
+    //변수 상관없이 리턴값을 넘겨줌
+    public <T> List<T> findallby(Class<T> type){
+        List<T> list = null;
+
+        return list;
+    }
+
 }
