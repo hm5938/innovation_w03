@@ -18,9 +18,4 @@ public class PostCrudApplication {
     public static void main(String[] args) {
         SpringApplication.run(PostCrudApplication.class, args);
     }
-    @Bean
-    public CommandLineRunner demo(PostRepository postRepository, PostService postService) {
-        return (args) -> {
-        };
-    }
 }
