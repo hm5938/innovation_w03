@@ -5,10 +5,13 @@ import com.sparta.post_crud.dto.ResponseDto;
 import com.sparta.post_crud.dto.PasswordDto;
 import com.sparta.post_crud.entity.Post;
 import com.sparta.post_crud.repository.PostRepository;
+import com.sparta.post_crud.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -18,11 +21,11 @@ public class PostService {
     private final String STR_NULL = "post id isn't exist";
 
     private final PostRepository postRepository;
+    private final TokenProvider tokenProvider;
 
     @Transactional
-    public ResponseDto<?> createPost(PostRequestDto requestDto) {
-
-        Post post = new Post(requestDto);
+    public ResponseDto<?> createPost(PostRequestDto requestDto , String username) {
+        Post post = new Post(requestDto ,username );
 
         postRepository.save(post);
 
@@ -46,7 +49,7 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseDto<Post> updatePost(Long id, PostRequestDto requestDto) {
+    public ResponseDto<Post> updatePost(Long id, PostRequestDto requestDto, String username) {
         Optional<Post> optionalPost = postRepository.findById(id);
 
         if (optionalPost.isEmpty()) {
@@ -54,13 +57,16 @@ public class PostService {
         }
 
         Post post = optionalPost.get();
-        post.update(requestDto);
 
+        if(!post.getName().equals(username)){
+            return ResponseDto.fail("NOT_POSTING_USER","게시글 작성자가 아닙니다.");
+        }
+        post.update(requestDto ,username);
         return ResponseDto.success(post);
     }
 
     @Transactional
-    public ResponseDto<?> deletePost(Long id) {
+    public ResponseDto<?> deletePost(Long id,String username) {
         Optional<Post> optionalPost = postRepository.findById(id);
 
         if (optionalPost.isEmpty()) {
@@ -68,6 +74,10 @@ public class PostService {
         }
 
         Post post = optionalPost.get();
+
+        if(!post.getName().equals(username)){
+            return ResponseDto.fail("NOT_POSTING_USER","게시글 작성자가 아닙니다.");
+        }
 
         postRepository.delete(post);
 

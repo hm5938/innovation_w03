@@ -1,9 +1,10 @@
 package com.sparta.post_crud.dto;
 
+
 import com.sparta.post_crud.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
+
 
 import java.time.LocalDateTime;
 

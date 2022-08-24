@@ -8,13 +8,12 @@ import lombok.NoArgsConstructor;
 public class PostRequestDto {
 
     private String title;
-    private String name;
+
     private String password;
     private String content;
 
-    public PostRequestDto(String title, String name, String password, String content){
+    public PostRequestDto(String title, String password, String content){
         this.title= title;
-        this.name = name;
         this.password = password;
         this.content = content;
     }

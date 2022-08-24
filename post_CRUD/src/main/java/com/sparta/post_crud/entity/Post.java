@@ -31,16 +31,16 @@ public class Post extends Timestamped{
         this.content = content;
     }
 
-    public Post(PostRequestDto postRequestDto){
+    public Post(PostRequestDto postRequestDto , String username){
         this.title = postRequestDto.getTitle();
-        this.name= postRequestDto.getName();
+        this.name= username;
         this.password = postRequestDto.getPassword();
         this.content = postRequestDto.getContent();
     }
 
-    public void update(PostRequestDto postRequestDto){
+    public void update(PostRequestDto postRequestDto, String username){
         this.title = postRequestDto.getTitle();
-        this.name= postRequestDto.getName();
+        this.name= username;
         this.password = postRequestDto.getPassword();
         this.content = postRequestDto.getContent();
     }
