@@ -16,7 +16,7 @@ import java.util.Optional;
 public class PostService {
 
     private final String STR_NULL = "post id isn't exist";
-   
+
     private final PostRepository postRepository;
 
     @Transactional
