@@ -26,15 +26,15 @@ public class Review extends Timestamped{
         this.content = content;
     }
 
-    public Review(ReviewRequestDto requestDto){
+    public Review(ReviewRequestDto requestDto, String username){
         this.post = requestDto.getPost();
-        this.username = requestDto.getUsername();
+        this.username = username;
         this.content = requestDto.getContent();
     }
 
-    public void update(ReviewRequestDto requestDto){
+    public void update(ReviewRequestDto requestDto, String username){
         this.post = requestDto.getPost();
-        this.username = requestDto.getUsername();
+        this.username = username;
         this.content = requestDto.getContent();
     }
 }
