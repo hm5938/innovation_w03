@@ -59,6 +59,40 @@ public class UserService {
     }
 
 
+    public ResponseDto<?> login(LoginRequestDto requestDto, HttpServletResponse response){
+
+        Optional<User> optionalUser =userRepository.findByUsername(requestDto.getUsername());
+        if(optionalUser.isEmpty()){
+            return ResponseDto.fail("NOT_FOUND", "사용자를 찾을 수 없습니다.");
+        }
+
+        String password =requestDto.getPassword();
+
+        User user = optionalUser.get();
+        if(!passwordEncoder.matches(password,user.getPassword())){
+            return ResponseDto.fail("NOT_FOUND", "비밀번호가 다릅니다.");
+        }
+
+        TokenDto tokenDto = tokenProvider.generateTokenDto(user);
+
+        response.addHeader("Access-Token",tokenDto.getAccessToken());
+        response.addHeader("Refresh-Token",tokenDto.getRefreshToken());
+
+       return ResponseDto.success(tokenDto);
+    }
+
+    public ResponseDto<?> logout(HttpServletRequest request){
+        if(!tokenProvider.validateToken(request.getHeader("Refresh-Token"))){
+            return ResponseDto.fail("INVALID_TOKEN","Token이 유효하지 않습니다");
+        }
+        User user = tokenProvider.getUserFromAuthentication(request.getHeader("Refresh-Token"));
+        if(user ==null){
+            return ResponseDto.fail("USER_NOT_FOUNT","사용자를 찾을 수 없습니다");
+        }
+
+        return tokenProvider.deleteRefreshToken(user);
+    }
+
 
 
 }
