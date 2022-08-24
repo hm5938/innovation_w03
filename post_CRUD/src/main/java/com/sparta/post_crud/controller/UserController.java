@@ -34,6 +34,15 @@ public class UserController {
         return userService.registerUser(requestDto);
     }
 
+    @PostMapping("/api/auth/users/logout")
+    public ResponseDto<?> logout(HttpServletRequest request){
+        return userService.logout(request);
+    }
+
+    @PostMapping("/api/users/login")
+    public ResponseDto<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response){
+        return userService.login(loginRequestDto , response);
+    }
 
 
 
