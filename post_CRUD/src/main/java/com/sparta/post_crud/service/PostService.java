@@ -5,6 +5,7 @@ import com.sparta.post_crud.dto.ResponseDto;
 import com.sparta.post_crud.dto.PasswordDto;
 import com.sparta.post_crud.entity.Post;
 import com.sparta.post_crud.repository.PostRepository;
+import com.sparta.post_crud.repository.ReviewRepository;
 import com.sparta.post_crud.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class PostService {
     private final String STR_NULL = "post id isn't exist";
 
     private final PostRepository postRepository;
+    private final ReviewRepository reviewRepository;
     private final TokenProvider tokenProvider;
 
     @Transactional
@@ -79,6 +81,7 @@ public class PostService {
             return ResponseDto.fail("NOT_POSTING_USER","게시글 작성자가 아닙니다.");
         }
 
+        reviewRepository.deleteAllByPost(post.getId());
         postRepository.delete(post);
 
         return ResponseDto.success(true);
