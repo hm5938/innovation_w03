@@ -1,4 +1,4 @@
-# innovation_w03
+# innovation_w04
 게시판 CRUD API 구현
 
 <br/>
@@ -79,6 +79,7 @@
 <br/>
 
 ## ERD
+![innovation04 (3)](https://user-images.githubusercontent.com/48474929/186540674-4667b38c-f926-4e91-a582-6f03869b5e45.png)
 
 
 <br/>
